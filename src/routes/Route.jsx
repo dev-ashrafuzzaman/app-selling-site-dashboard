@@ -16,6 +16,7 @@ import EditBill from "../pages/ManageBill/EditBill";
 import PrintBill from "../pages/ManageBill/PrintBill";
 import ManageAccounts from "../pages/ManageAccounts/ManageAccounts";
 import SoftDetails from "../pages/SoftDetails/SoftDetails";
+import ManageOrders from "../pages/ManageOrders/ManageOrders";
 
 export const router = createBrowserRouter([
     {
@@ -39,10 +40,7 @@ export const router = createBrowserRouter([
                 path: 'manage-admins',
                 element: <ManageAdmins></ManageAdmins>
             },
-            {
-                path: 'add-customer',
-                element: <AddCustomer></AddCustomer>
-            },
+      
             {
                 path: 'manage-customers',
                 element: <ManageCustomers></ManageCustomers>
@@ -67,8 +65,8 @@ export const router = createBrowserRouter([
                 loader: ({ params }) => fetch(`${serverURL}/api/v1/public/khotiyan/${params.id}`)
             },
             {
-                path: 'manage-accounts',
-                element: <ManageAccounts></ManageAccounts>
+                path: 'manage-orders',
+                element: <ManageOrders></ManageOrders>
             },
             {
                 path: 'manage-details',

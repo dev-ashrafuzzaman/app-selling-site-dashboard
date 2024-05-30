@@ -43,9 +43,9 @@ const AddCustomer = () => {
     return (
         <div className="w-full py-10 px-10">
             <ToastContainer></ToastContainer>
-            <SectionTitle heading={'অ্যাড পার্টি'}></SectionTitle>
+            <SectionTitle heading={'অ্যাড কাস্টমার'}></SectionTitle>
             <Helmet>
-                <title>Dashboard | অ্যাড পার্টি </title>
+                <title>Dashboard | অ্যাড কাস্টমার </title>
             </Helmet>
             <form onSubmit={handleSubmit(onSubmit)} className="md:ml-20 bg-[#F0F3F4] rounded-xl md:p-10 p-4" >
                 <div className="md:flex gap-6">

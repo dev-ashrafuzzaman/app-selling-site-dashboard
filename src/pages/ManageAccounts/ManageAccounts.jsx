@@ -2,83 +2,8 @@ import { Helmet } from 'react-helmet-async';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import SectionTitle from '../../components/SectionTitle';
-import { useEffect, useRef, useState } from 'react';
-import useKhotiyan from '../../hooks/useKhotiyan';
-import useCustomers from '../../hooks/useCustomers';
-import Select from 'react-select';
-import { useReactToPrint } from 'react-to-print';
-import { FaPrint } from 'react-icons/fa';
-import { calculateTotalCredit, calculateTotalDebit } from '../../utils/HandleBillDebitCal';
 
 const ManageAccounts = () => {
-    const componentPDF = useRef();
-
-
-
-
-    const [isKhotiyan] = useKhotiyan();
-    const [isCustomers] = useCustomers();
-
-    // Select Party Area Function
-    const [selectedCustomer, setSelectedCustomer] = useState(null);
-    const [customerData, setCustomerData] = useState(isCustomers);
-
-
-    useEffect(() => {
-        setCustomerData(isCustomers);
-    }, [isCustomers]);
-
-    const handleCustomerSelect = (selectedOption) => {
-        setSelectedCustomer(selectedOption);
-    };
-
-    const filteredOptions = customerData?.map(user => ({
-        value: user.cus_name,
-        data: user,
-        label: `${user.cus_name} --- ${user.cus_mobile} --- ${user.cus_company}`
-    }));
-
-    // Select Party Account Area Function
-    const [selectedAccount, setSelectedAccount] = useState(null);
-    const [cusAccount, setCusAccount] = useState([]);
-
-
-    useEffect(() => {
-        if (selectedCustomer) {
-            const filteredAccounts = isKhotiyan?.filter(acc => acc.cus_id === selectedCustomer.data._id) || [];
-            setCusAccount(filteredAccounts);
-        }
-    }, [selectedCustomer, isKhotiyan]);
-
-
-    const handleAccountSelect = (selectedOption) => {
-        setSelectedAccount(selectedOption);
-    };
-
-    const filteredPartyAccount = cusAccount?.map(user => ({
-        value: user._id,
-        data: user,
-        label: `${user.accType} --- ${user.date} --- ${user.status === true ? 'ACTIVE' : 'DEACTIVE'}`
-    }));
-
-
-    const genaratePDF = useReactToPrint({
-        content: () => componentPDF.current,
-        documentTitle: `Account Statement: ${selectedAccount?.data?.cus_name}`,
-        pageStyle: `
-    @page {
-      size: A4;
-      margin: 0;
-    }
-    @media print {
-      body {
-        size: A4;
-        margin: 0;
-      }
-    }
-  `
-    })
-
 
     return (
         <div className="mx-auto max-w-screen-lg relative md:py-10 md:px-10 px-2 ">

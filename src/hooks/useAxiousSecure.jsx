@@ -5,11 +5,11 @@ import { useEffect } from 'react';
 
 
 
-export const serverURL = 'https://royalapi.leeryit.com'
-export const mainURL = 'https://royalbill.leeryit.com'
+// export const serverURL = 'https://royalapi.leeryit.com'
+// export const mainURL = 'https://royalbill.leeryit.com'
 
-// export const serverURL = 'http://localhost:3000'
-// export const mainURL = 'http://localhost:5173'
+export const serverURL = 'http://localhost:3000'
+export const mainURL = 'http://localhost:5173'
 
 const axiosSecure = axios.create({
   baseURL: serverURL

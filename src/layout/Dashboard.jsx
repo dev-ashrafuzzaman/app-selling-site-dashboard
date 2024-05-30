@@ -1,7 +1,7 @@
 import { NavLink, Outlet, useNavigate } from "react-router-dom";
-import { FaCalculator, FaHome, FaUsers } from "react-icons/fa";
-import userPhoto from '../assets/royal.jpg'
-import profilePhoto from '../assets/royal.jpg'
+import { FaCalculator, FaHome, FaServicestack, FaUsers } from "react-icons/fa";
+import userPhoto from '../assets/image/userphoto.png'
+import profilePhoto from '../assets/image/userphoto.png'
 import useAuth from "../hooks/useAuth";
 import { MdVerified, MdLogout, MdMenuOpen, MdCheck } from "react-icons/md";
 
@@ -98,13 +98,14 @@ const Dashboard = () => {
 
                     <ul className="menu p-4  h-[100%] bg-[#F0F3F4]  text-base  text-black">
                         {/* Sidebar content here */}
-                        <a className="mb-20 font-bold">M/S. ROYAL HOSSAIN</a>
+                        <a className="mb-20 font-bold">FASTER APP MAKER</a>
                         {
                             isAdmin && <>
                                 <li><NavLink to="/admin/dashboard/home"><FaHome></FaHome>অ্যাডমিন হোম</NavLink></li>
                                 {/* <li><NavLink to="/admin/dashboard/manage-admins"><MdVerifiedUser></MdVerifiedUser> ইউসার ম্যানেজ</NavLink></li> */}
-                                <li><NavLink to="/admin/dashboard/manage-customers"><FaUsers></FaUsers>পার্টি ম্যানেজ</NavLink></li>
-                                <li><NavLink to="/admin/dashboard/manage-accounts"><FaCalculator></FaCalculator>একাউন্টস</NavLink></li>
+                                <li><NavLink to="/admin/dashboard/manage-customers"><FaUsers></FaUsers>কাস্টমার</NavLink></li>
+                                <li><NavLink to="/admin/dashboard/manage-orders"><FaCalculator></FaCalculator>অর্ডার</NavLink></li>
+                                <li><NavLink to="/admin/dashboard/manage-accounts"><FaServicestack></FaServicestack> সেটিং</NavLink></li>
                                 <li><NavLink to="/admin/dashboard/manage-details"><MdCheck></MdCheck>ডিটেলস</NavLink></li>
 
                             </>

@@ -188,7 +188,7 @@ const DetailsCustomer = () => {
                 />
             </div>
 
-            <div className="my-32">
+            {/* <div className="my-32">
                 <SectionTitle heading={'আপডেট পার্টি'}></SectionTitle>
                 <form onSubmit={handleSubmit(onSubmit)} className="md:ml-20 bg-[#F0F3F4] rounded-xl md:p-10 p-4" >
                     <div className="md:flex gap-6">
@@ -226,7 +226,7 @@ const DetailsCustomer = () => {
                         </button>
                     </div>
                 </form>
-            </div>
+            </div> */}
 
 
             <dialog id="my_modal_3" className="modal">

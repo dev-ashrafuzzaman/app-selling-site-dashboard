@@ -12,27 +12,26 @@ import { useState } from 'react';
 
 const ManageCustomers = () => {
     const [axiosSecure] = useAxiosSecure();
-    const [isCustomers, refetch] = useCustomers();
     const [searchInput, setSearchInput] = useState("");
-    console.log(isCustomers);
+    const [currentPage, setCurrentPage] = useState(1);
+    const [customersPerPage] = useState(10);
+    const { customers, totalPages, refetch, isLoading } = useCustomers(searchInput, currentPage, customersPerPage);
+    console.log(customers);
+
     const handleSelectChange = (event) => {
         setSearchInput(event.target.value);
     };
 
-    // Filter devices based on search input
-    const searchCustomer = isCustomers?.filter(user =>
-        user.cus_name.toLowerCase().includes(searchInput.toLowerCase()) ||
-        user.cus_mobile.toLowerCase().includes(searchInput.toLowerCase())
-    );
-
-
+    const handlePageChange = (page) => {
+        setCurrentPage(page);
+    };
 
     return (
-        <div className="w-full md:py-10  px-2 ">
-            <SectionTitle heading={'ম্যানেজ পার্টি'}></SectionTitle>
+        <div className="w-full md:py-10 px-2">
+            <SectionTitle heading={'ম্যানেজ কাস্টমার'}></SectionTitle>
             <div>
                 <Helmet>
-                    <title>ড্যাশবোর্ড | ম্যানেজ পার্টি</title>
+                    <title>ড্যাশবোর্ড | ম্যানেজ কাস্টমার</title>
                 </Helmet>
                 <div className='flex justify-end items-center mb-4 px-2'>
                     <div className="join w-full md:w-[800px]">
@@ -48,60 +47,68 @@ const ManageCustomers = () => {
                             <option disabled value={'Filter'}>Filter</option>
                             <option value={''}>All</option>
                         </select>
-                        <Link className="btn join-item btn-outline " to={'/admin/dashboard/add-customer'}>Add</Link>
+                        {/* <Link className="btn join-item btn-outline " to={'/admin/dashboard/add-customer'}>Add</Link> */}
                     </div>
                 </div>
                 <div className="overflow-x-auto rounded-xl">
                     <table className="table">
                         {/* head */}
                         <thead className="bg-[#106a4f] text-white rounded-xl">
-                            <tr >
-                                <th>
-                                    #
-                                </th>
+                            <tr>
+                                <th>#</th>
                                 <th>নাম</th>
-                                <th>মোবাইল</th>
-                                <th>কোম্পানি</th>
-                                <th>ঠিকানা</th>
+                                <th>ইমেইল</th>
                                 <th>স্ট্যাটাস</th>
                                 <th></th>
                             </tr>
                         </thead>
                         <tbody>
                             {
-                                searchCustomer?.map((user, index) =>
+                                customers?.map((user, index) =>
                                     <tr className="hover:bg-green-50" key={user._id}>
                                         <th>
                                             <label>
-                                                {index + 1}
+                                                {(currentPage - 1) * customersPerPage + index + 1}
                                             </label>
                                         </th>
                                         <td>
                                             <div className="flex items-center space-x-3">
                                                 <div>
-                                                    <div className="font-bold text-center">{user.cus_name}</div>
+                                                    <div className="font-bold text-center">{user.name}</div>
                                                 </div>
                                             </div>
                                         </td>
-                                        <td className='font-bold'>{user.cus_mobile}</td>
-                                        <td className='font-bold'>
-                                            <div>{user.cus_company}</div>
+                                        <td className='font-bold'>{user.email}</td>
+                                  
+                                        <td>
+                                            <button onClick={() => HandleStatusChange(axiosSecure, refetch, user._id, !user.status, '/api/v1/admin/customer/status/')} className={`text-sm font-bold text-white badge ${user.status === false ? 'bg-red-700' : 'bg-green-700'}`}>
+                                                {user.status === true ? 'Active' : 'Inactive'}
+                                            </button>
                                         </td>
-                                        <td className='font-bold'>
-                                            <div>{user.cus_address}</div>
-                                        </td>
-
-                                        <td ><button onClick={() => HandleStatusChange(axiosSecure, refetch, user._id, !user.status, '/api/v1/admin/customer/status/')} className={`text-sm font-bold   text-white badge bg-green-700 ${user.status === false ? 'bg-red-700' : 'bg-green-700'}`}>{user.status === true ? 'Active' : 'Dctive'}</button></td>
                                         <th>
-                                            <Link to={`/admin/dashboard/customer-details/${user._id}`}><button className=" btn  btn-accent text-white btn-xs md:me-2"><FaEye></FaEye></button></Link>
-                                            <button onClick={() => HandleDelete(axiosSecure, refetch, user._id, '/api/v1/admin/customer/')} className="btn  btn-error text-white btn-xs mt-2 md:mt-1"><FaTrash></FaTrash></button>
+                                            <Link to={`/admin/dashboard/customer-details/${user._id}`}><button className="btn btn-accent text-white btn-xs md:me-2"><FaEye></FaEye></button></Link>
+                                            <button onClick={() => HandleDelete(axiosSecure, refetch, user._id, '/api/v1/admin/customer/')} className="btn btn-error text-white btn-xs mt-2 md:mt-1"><FaTrash></FaTrash></button>
                                         </th>
                                     </tr>
                                 )
                             }
-
                         </tbody>
                     </table>
+                </div>
+                <div className="flex justify-end mt-4">
+                    <div className="btn-group">
+                        {
+                            Array.from({ length: totalPages }, (_, i) => (
+                                <button
+                                    key={i}
+                                    onClick={() => handlePageChange(i + 1)}
+                                    className={`btn btn-sm  ${currentPage === i + 1 ? 'btn-active' : ''}`}
+                                >
+                                    {i + 1}
+                                </button>
+                            ))
+                        }
+                    </div>
                 </div>
             </div>
             <ToastContainer
